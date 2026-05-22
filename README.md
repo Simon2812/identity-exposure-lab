@@ -2,6 +2,21 @@
 
 Identity Exposure Lab analyzes small Active Directory-style CSV exports and Microsoft Entra ID-style JSON exports. It normalizes users, groups, applications, policies, and permissions, then reports risky identity configurations and privilege paths.
 
+## Detection Rules
+
+| Rule ID | Detection | Severity |
+|---|---|---|
+| `ID-001` | Disabled privileged account still has privileged assignment | Medium |
+| `ID-002` | Stale privileged identity | High |
+| `ID-003` | Privileged Entra ID account without MFA | Critical |
+| `ID-004` | Password never expires | Medium / High |
+| `ID-005` | Kerberoastable AD account with SPN | High / Critical |
+| `ID-006` | Guest identity has privileged access | Critical |
+| `ID-007` | Application has high-risk Entra permissions | High / Critical |
+| `ID-008` | Stale application secret | Medium |
+| `ID-009` | No enabled tenant-wide MFA Conditional Access policy | High |
+| `ID-010` | Non-privileged identity has path to privileged object | High |
+
 ## Inputs
 
 ```text
