@@ -1,6 +1,6 @@
 # Identity Exposure Lab
 
-Identity Exposure Lab analyzes small Active Directory-style CSV exports and Microsoft Entra ID-style JSON exports. It normalizes users, groups, applications, policies, and permissions, then reports risky identity configurations and privilege paths.
+Identity Exposure Lab analyzes Active Directory-style CSV exports and Microsoft Entra ID-style JSON exports. It normalizes users, groups, applications, policies, and permissions, then reports risky identity configurations and privilege paths.
 
 ## Detection Rules
 
