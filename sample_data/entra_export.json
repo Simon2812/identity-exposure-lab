@@ -1,0 +1,92 @@
+{
+  "users": [
+    {
+      "id": "entra-u-200",
+      "displayName": "Cloud Global Admin",
+      "userPrincipalName": "cloud.admin@example.com",
+      "accountEnabled": true,
+      "privileged": true,
+      "mfaEnabled": false,
+      "lastSignInDays": 3,
+      "userType": "Member"
+    },
+    {
+      "id": "entra-u-201",
+      "displayName": "External Security Partner",
+      "userPrincipalName": "partner_external#EXT#@example.onmicrosoft.com",
+      "accountEnabled": true,
+      "privileged": true,
+      "mfaEnabled": true,
+      "lastSignInDays": 15,
+      "userType": "Guest"
+    },
+    {
+      "id": "entra-u-202",
+      "displayName": "App Developer",
+      "userPrincipalName": "app.dev@example.com",
+      "accountEnabled": true,
+      "privileged": false,
+      "mfaEnabled": true,
+      "lastSignInDays": 1,
+      "userType": "Member"
+    },
+    {
+      "id": "entra-u-203",
+      "displayName": "Dormant Privileged Role Holder",
+      "userPrincipalName": "dormant.admin@example.com",
+      "accountEnabled": true,
+      "privileged": true,
+      "mfaEnabled": true,
+      "lastSignInDays": 91,
+      "userType": "Member"
+    }
+  ],
+  "groups": [
+    {
+      "id": "entra-g-200",
+      "displayName": "Global Administrator",
+      "privileged": true,
+      "members": ["entra-u-200", "entra-u-201", "entra-u-203"]
+    },
+    {
+      "id": "entra-g-201",
+      "displayName": "Application Owners",
+      "privileged": false,
+      "members": ["entra-u-202"]
+    }
+  ],
+  "applications": [
+    {
+      "id": "entra-app-300",
+      "displayName": "HR Automation App",
+      "owners": ["entra-u-202"],
+      "appPermissions": ["User.ReadWrite.All", "Directory.ReadWrite.All"],
+      "secretAgeDays": 240
+    },
+    {
+      "id": "entra-app-301",
+      "displayName": "Role Sync App",
+      "owners": ["entra-u-202"],
+      "appPermissions": ["RoleManagement.ReadWrite.Directory"],
+      "secretAgeDays": 45
+    }
+  ],
+  "conditionalAccessPolicies": [
+    {
+      "id": "ca-400",
+      "displayName": "Require MFA for admins",
+      "state": "enabled",
+      "requiresMfa": true,
+      "includesAllUsers": false,
+      "excludesGuests": true
+    },
+    {
+      "id": "ca-401",
+      "displayName": "Legacy pilot policy",
+      "state": "disabled",
+      "requiresMfa": true,
+      "includesAllUsers": true,
+      "excludesGuests": false
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+id,display_name,user_principal_name,enabled,privileged,password_never_expires,spn_count,last_sign_in_days
+ad-u-100,Alice Admin,alice.admin@corp.local,true,true,false,0,2
+ad-u-101,Legacy Domain Admin,legacy.admin@corp.local,false,true,true,0,180
+ad-u-102,SQL Service,sqlsvc@corp.local,true,true,true,2,12
+ad-u-103,Helpdesk User,helpdesk1@corp.local,true,false,false,0,5
+ad-u-104,Build Service,buildsvc@corp.local,true,false,true,1,60
+ad-u-105,Marketing User,marketing@corp.local,true,false,false,0,7

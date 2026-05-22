@@ -1,0 +1,5 @@
+id,display_name,privileged,members
+ad-g-100,Domain Admins,true,ad-u-100;ad-u-101;ad-u-102
+ad-g-101,Server Operators,true,ad-u-103
+ad-g-102,IT Support,false,ad-u-103;ad-u-104
+ad-g-103,Marketing,false,ad-u-105
