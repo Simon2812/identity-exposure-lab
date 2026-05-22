@@ -45,15 +45,16 @@ curl \
 Then open `artifacts/reports/identity_report.html`, `artifacts/reports/identity_report.json`, and `http://localhost:8000/docs`.
 
 JSON findings:
-(docs/screenshots/json-findings.png)
+![](docs/screenshots/json-findings.png)
 
 HTML report:
-(docs/screenshots/html-report.png)
+![](docs/screenshots/html-report.png)
 
 API upload response:
-(docs/screenshots/upload-response.png)
+![](docs/screenshots/upload-response.png)
 
-FastAPI docs:(docs/screenshots/fastapi-docs.png)
+FastAPI docs:
+![](docs/screenshots/fastapi-docs.png)
 
 ## Findings Covered
 
