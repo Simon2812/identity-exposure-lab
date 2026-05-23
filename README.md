@@ -82,26 +82,21 @@ CLI analysis:
 
 ![](docs/screenshots/cli-analysis.png)
 
-
 JSON report:
 
 ![](docs/screenshots/json-report.png)
-
 
 HTML report:
 
 ![](docs/screenshots/html-report.png)
 
-
-UI for upload:
-
-![](docs/screenshots/upload-ui.png)
-
-
 FastAPI docs:
 
 ![](docs/screenshots/fastapi-docs.png)
 
+UI for upload:
+
+![](docs/screenshots/upload-ui.png)
 
 ## Findings Covered
 
