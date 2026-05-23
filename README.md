@@ -60,7 +60,7 @@ curl \
 Then open `artifacts/reports/identity_report.html`, `artifacts/reports/identity_report.json`, and `http://localhost:8000/docs`.
 
 CLI analysis:
-![](docs/screenshots/cli-analysis).png)
+![](docs/screenshots/cli-analysis.png)
 
 JSON findings:
 ![](docs/screenshots/json-findings.png)
