@@ -1,6 +1,12 @@
 # Identity Exposure Lab
 
-Identity Exposure Lab analyzes Active Directory-style CSV exports and Microsoft Entra ID-style JSON exports. It normalizes users, groups, applications, policies, and permissions, then reports risky identity configurations and privilege paths.
+Identity Exposure Lab is a Python-based identity security analysis platform that detects risky configurations, privilege exposures, and insecure identity relationships across hybrid Active Directory and Microsoft Entra ID environments.
+
+The project ingests AD-style CSV exports and Entra ID-style JSON exports, normalizes identities and permissions into a unified internal model, builds identity relationship graphs, and applies security detection rules to identify privilege escalation paths, stale identities, MFA gaps, high-risk application permissions, and other common identity security weaknesses.
+
+The system was designed to simulate real-world identity security and IAM assessment workflows used by blue teams, cloud security engineers, and identity-focused security analysts. It combines graph-based privilege analysis, rule-based detections, API-driven analysis, and report generation into a single security assessment pipeline.
+
+Identity Exposure Lab supports both CLI-based execution and a FastAPI upload interface that generates structured JSON findings and HTML security reports from uploaded identity datasets.
 
 ## Detection Rules
 
