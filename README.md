@@ -33,13 +33,25 @@ sample_data/entra_export.json
 
 ## Run
 
-```bash
-python3 -m venv .venv
+# Create virtual environment
+python -m venv .venv
+
+# Activate environment
+
+# Linux/macOS
 source .venv/bin/activate
+
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+
+# Install project
 pip install -e ".[dev]"
+
+# Run CLI
 python -m identity_exposure.cli
+
+# Run tests
 pytest
-```
 
 Custom files:
 
