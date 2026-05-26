@@ -1,0 +1,216 @@
+{
+  "summary": {
+    "analyzed_at": "2026-05-23T13:55:49.360848+00:00",
+    "users": 10,
+    "groups": 6,
+    "applications": 2,
+    "conditional_access_policies": 2,
+    "findings": 17,
+    "critical": 4,
+    "high": 10,
+    "medium": 3,
+    "low": 0
+  },
+  "findings": [
+    {
+      "rule_id": "ID-003",
+      "title": "Privileged Entra ID account without MFA",
+      "severity": "critical",
+      "description": "Cloud Global Admin is privileged but MFA is not enabled.",
+      "affected_object": "cloud.admin@example.com",
+      "evidence": [
+        "user_id=entra-u-200",
+        "mfa_enabled=false"
+      ],
+      "remediation": "Require phishing-resistant MFA for privileged identities."
+    },
+    {
+      "rule_id": "ID-005",
+      "title": "Kerberoastable AD account",
+      "severity": "critical",
+      "description": "SQL Service has 2 SPN value(s).",
+      "affected_object": "sqlsvc@corp.local",
+      "evidence": [
+        "spn_count=2",
+        "privileged=True"
+      ],
+      "remediation": "Use gMSA/managed service accounts and remove unnecessary SPNs."
+    },
+    {
+      "rule_id": "ID-006",
+      "title": "Guest identity has privileged access",
+      "severity": "critical",
+      "description": "Guest user External Security Partner is privileged.",
+      "affected_object": "partner_external#EXT#@example.onmicrosoft.com",
+      "evidence": [
+        "user_id=entra-u-201",
+        "user_type=Guest"
+      ],
+      "remediation": "Remove privileged roles from guest accounts unless explicitly approved."
+    },
+    {
+      "rule_id": "ID-007",
+      "title": "Application has high-risk Entra permissions",
+      "severity": "critical",
+      "description": "Role Sync App has high-impact application permissions.",
+      "affected_object": "Role Sync App",
+      "evidence": [
+        "RoleManagement.ReadWrite.Directory"
+      ],
+      "remediation": "Apply least privilege and require admin consent review for high-risk permissions."
+    },
+    {
+      "rule_id": "ID-002",
+      "title": "Stale privileged identity",
+      "severity": "high",
+      "description": "Legacy Domain Admin is privileged and has not signed in for 180 days.",
+      "affected_object": "legacy.admin@corp.local",
+      "evidence": [
+        "last_sign_in_days=180"
+      ],
+      "remediation": "Review whether the account still needs privileged access."
+    },
+    {
+      "rule_id": "ID-002",
+      "title": "Stale privileged identity",
+      "severity": "high",
+      "description": "Dormant Privileged Role Holder is privileged and has not signed in for 91 days.",
+      "affected_object": "dormant.admin@example.com",
+      "evidence": [
+        "last_sign_in_days=91"
+      ],
+      "remediation": "Review whether the account still needs privileged access."
+    },
+    {
+      "rule_id": "ID-004",
+      "title": "Password never expires",
+      "severity": "high",
+      "description": "Legacy Domain Admin has password_never_expires enabled.",
+      "affected_object": "legacy.admin@corp.local",
+      "evidence": [
+        "source=ad",
+        "privileged=True"
+      ],
+      "remediation": "Review password policy and migrate service use cases to managed identities."
+    },
+    {
+      "rule_id": "ID-004",
+      "title": "Password never expires",
+      "severity": "high",
+      "description": "SQL Service has password_never_expires enabled.",
+      "affected_object": "sqlsvc@corp.local",
+      "evidence": [
+        "source=ad",
+        "privileged=True"
+      ],
+      "remediation": "Review password policy and migrate service use cases to managed identities."
+    },
+    {
+      "rule_id": "ID-005",
+      "title": "Kerberoastable AD account",
+      "severity": "high",
+      "description": "Build Service has 1 SPN value(s).",
+      "affected_object": "buildsvc@corp.local",
+      "evidence": [
+        "spn_count=1",
+        "privileged=False"
+      ],
+      "remediation": "Use gMSA/managed service accounts and remove unnecessary SPNs."
+    },
+    {
+      "rule_id": "ID-007",
+      "title": "Application has high-risk Entra permissions",
+      "severity": "high",
+      "description": "HR Automation App has high-impact application permissions.",
+      "affected_object": "HR Automation App",
+      "evidence": [
+        "Directory.ReadWrite.All",
+        "User.ReadWrite.All"
+      ],
+      "remediation": "Apply least privilege and require admin consent review for high-risk permissions."
+    },
+    {
+      "rule_id": "ID-009",
+      "title": "No enabled tenant-wide MFA Conditional Access policy",
+      "severity": "high",
+      "description": "No enabled Conditional Access policy requires MFA for all users.",
+      "affected_object": "conditional_access",
+      "evidence": [
+        "Require MFA for admins: state=enabled, requires_mfa=True, includes_all_users=False",
+        "Legacy pilot policy: state=disabled, requires_mfa=True, includes_all_users=True"
+      ],
+      "remediation": "Create or enable a Conditional Access policy requiring MFA for all users with approved exclusions."
+    },
+    {
+      "rule_id": "ID-010",
+      "title": "Non-privileged identity has path to privileged object",
+      "severity": "high",
+      "description": "Identity ad-u-103 can reach privileged target ad-g-101.",
+      "affected_object": "ad-u-103",
+      "evidence": [
+        "ad-u-103 -> ad-g-101",
+        " relationships=member_of"
+      ],
+      "remediation": "Review group nesting, app ownership and high-risk app permissions."
+    },
+    {
+      "rule_id": "ID-010",
+      "title": "Non-privileged identity has path to privileged object",
+      "severity": "high",
+      "description": "Identity entra-u-202 can reach privileged target Directory.ReadWrite.All.",
+      "affected_object": "entra-u-202",
+      "evidence": [
+        "entra-u-202 -> entra-app-300 -> Directory.ReadWrite.All",
+        " relationships=owns_app -> has_permission"
+      ],
+      "remediation": "Review group nesting, app ownership and high-risk app permissions."
+    },
+    {
+      "rule_id": "ID-010",
+      "title": "Non-privileged identity has path to privileged object",
+      "severity": "high",
+      "description": "Identity entra-u-202 can reach privileged target RoleManagement.ReadWrite.Directory.",
+      "affected_object": "entra-u-202",
+      "evidence": [
+        "entra-u-202 -> entra-app-301 -> RoleManagement.ReadWrite.Directory",
+        " relationships=owns_app -> has_permission"
+      ],
+      "remediation": "Review group nesting, app ownership and high-risk app permissions."
+    },
+    {
+      "rule_id": "ID-001",
+      "title": "Disabled privileged account still assigned privilege",
+      "severity": "medium",
+      "description": "Legacy Domain Admin is disabled but still marked as privileged.",
+      "affected_object": "legacy.admin@corp.local",
+      "evidence": [
+        "user_id=ad-u-101",
+        "source=ad"
+      ],
+      "remediation": "Remove privileged assignments from disabled accounts."
+    },
+    {
+      "rule_id": "ID-004",
+      "title": "Password never expires",
+      "severity": "medium",
+      "description": "Build Service has password_never_expires enabled.",
+      "affected_object": "buildsvc@corp.local",
+      "evidence": [
+        "source=ad",
+        "privileged=False"
+      ],
+      "remediation": "Review password policy and migrate service use cases to managed identities."
+    },
+    {
+      "rule_id": "ID-008",
+      "title": "Stale application secret",
+      "severity": "medium",
+      "description": "HR Automation App has a secret aged 240 days.",
+      "affected_object": "HR Automation App",
+      "evidence": [
+        "secret_age_days=240"
+      ],
+      "remediation": "Rotate secrets and prefer certificate or workload identity federation where possible."
+    }
+  ]
+}

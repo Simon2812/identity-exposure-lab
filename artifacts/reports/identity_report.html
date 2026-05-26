@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Identity Exposure Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; background: #f8fafc; color: #1f2937; }
+    h1, h2 { margin-bottom: 8px; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
+    .metric { background: white; border: 1px solid #dbe3ef; border-radius: 8px; padding: 14px; }
+    .metric span { display: block; color: #64748b; font-size: 13px; }
+    .metric strong { display: block; font-size: 26px; margin-top: 4px; }
+    .finding { background: white; border-left: 6px solid #64748b; border-radius: 8px; padding: 16px; margin: 16px 0; }
+    .critical { border-left-color: #991b1b; }
+    .high { border-left-color: #dc2626; }
+    .medium { border-left-color: #d97706; }
+    .low { border-left-color: #2563eb; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 999px; font-size: 12px; text-transform: uppercase; background: #e2e8f0; }
+    code { background: #e2e8f0; padding: 2px 5px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Identity Exposure Report</h1>
+  <p>Analyzed at 2026-05-23T13:55:49.360848+00:00</p>
+  <section class="summary">
+    <div class="metric"><span>Users</span><strong>10</strong></div>
+    <div class="metric"><span>Groups</span><strong>6</strong></div>
+    <div class="metric"><span>Apps</span><strong>2</strong></div>
+    <div class="metric"><span>Findings</span><strong>17</strong></div>
+    <div class="metric"><span>Critical</span><strong>4</strong></div>
+    <div class="metric"><span>High</span><strong>10</strong></div>
+  </section>
+  <h2>Findings</h2>
+  
+    <article class="finding critical">
+      <span class="badge">critical</span>
+      <h3>ID-003 - Privileged Entra ID account without MFA</h3>
+      <p>Cloud Global Admin is privileged but MFA is not enabled.</p>
+      <p><strong>Affected object:</strong> cloud.admin@example.com</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>user_id=entra-u-200</code></li><li><code>mfa_enabled=false</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Require phishing-resistant MFA for privileged identities.</p>
+    </article>
+  
+    <article class="finding critical">
+      <span class="badge">critical</span>
+      <h3>ID-005 - Kerberoastable AD account</h3>
+      <p>SQL Service has 2 SPN value(s).</p>
+      <p><strong>Affected object:</strong> sqlsvc@corp.local</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>spn_count=2</code></li><li><code>privileged=True</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Use gMSA/managed service accounts and remove unnecessary SPNs.</p>
+    </article>
+  
+    <article class="finding critical">
+      <span class="badge">critical</span>
+      <h3>ID-006 - Guest identity has privileged access</h3>
+      <p>Guest user External Security Partner is privileged.</p>
+      <p><strong>Affected object:</strong> partner_external#EXT#@example.onmicrosoft.com</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>user_id=entra-u-201</code></li><li><code>user_type=Guest</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Remove privileged roles from guest accounts unless explicitly approved.</p>
+    </article>
+  
+    <article class="finding critical">
+      <span class="badge">critical</span>
+      <h3>ID-007 - Application has high-risk Entra permissions</h3>
+      <p>Role Sync App has high-impact application permissions.</p>
+      <p><strong>Affected object:</strong> Role Sync App</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>RoleManagement.ReadWrite.Directory</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Apply least privilege and require admin consent review for high-risk permissions.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-002 - Stale privileged identity</h3>
+      <p>Legacy Domain Admin is privileged and has not signed in for 180 days.</p>
+      <p><strong>Affected object:</strong> legacy.admin@corp.local</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>last_sign_in_days=180</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Review whether the account still needs privileged access.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-002 - Stale privileged identity</h3>
+      <p>Dormant Privileged Role Holder is privileged and has not signed in for 91 days.</p>
+      <p><strong>Affected object:</strong> dormant.admin@example.com</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>last_sign_in_days=91</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Review whether the account still needs privileged access.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-004 - Password never expires</h3>
+      <p>Legacy Domain Admin has password_never_expires enabled.</p>
+      <p><strong>Affected object:</strong> legacy.admin@corp.local</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>source=ad</code></li><li><code>privileged=True</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Review password policy and migrate service use cases to managed identities.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-004 - Password never expires</h3>
+      <p>SQL Service has password_never_expires enabled.</p>
+      <p><strong>Affected object:</strong> sqlsvc@corp.local</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>source=ad</code></li><li><code>privileged=True</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Review password policy and migrate service use cases to managed identities.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-005 - Kerberoastable AD account</h3>
+      <p>Build Service has 1 SPN value(s).</p>
+      <p><strong>Affected object:</strong> buildsvc@corp.local</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>spn_count=1</code></li><li><code>privileged=False</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Use gMSA/managed service accounts and remove unnecessary SPNs.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-007 - Application has high-risk Entra permissions</h3>
+      <p>HR Automation App has high-impact application permissions.</p>
+      <p><strong>Affected object:</strong> HR Automation App</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>Directory.ReadWrite.All</code></li><li><code>User.ReadWrite.All</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Apply least privilege and require admin consent review for high-risk permissions.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-009 - No enabled tenant-wide MFA Conditional Access policy</h3>
+      <p>No enabled Conditional Access policy requires MFA for all users.</p>
+      <p><strong>Affected object:</strong> conditional_access</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>Require MFA for admins: state=enabled, requires_mfa=True, includes_all_users=False</code></li><li><code>Legacy pilot policy: state=disabled, requires_mfa=True, includes_all_users=True</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Create or enable a Conditional Access policy requiring MFA for all users with approved exclusions.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-010 - Non-privileged identity has path to privileged object</h3>
+      <p>Identity ad-u-103 can reach privileged target ad-g-101.</p>
+      <p><strong>Affected object:</strong> ad-u-103</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>ad-u-103 -> ad-g-101</code></li><li><code> relationships=member_of</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Review group nesting, app ownership and high-risk app permissions.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-010 - Non-privileged identity has path to privileged object</h3>
+      <p>Identity entra-u-202 can reach privileged target Directory.ReadWrite.All.</p>
+      <p><strong>Affected object:</strong> entra-u-202</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>entra-u-202 -> entra-app-300 -> Directory.ReadWrite.All</code></li><li><code> relationships=owns_app -> has_permission</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Review group nesting, app ownership and high-risk app permissions.</p>
+    </article>
+  
+    <article class="finding high">
+      <span class="badge">high</span>
+      <h3>ID-010 - Non-privileged identity has path to privileged object</h3>
+      <p>Identity entra-u-202 can reach privileged target RoleManagement.ReadWrite.Directory.</p>
+      <p><strong>Affected object:</strong> entra-u-202</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>entra-u-202 -> entra-app-301 -> RoleManagement.ReadWrite.Directory</code></li><li><code> relationships=owns_app -> has_permission</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Review group nesting, app ownership and high-risk app permissions.</p>
+    </article>
+  
+    <article class="finding medium">
+      <span class="badge">medium</span>
+      <h3>ID-001 - Disabled privileged account still assigned privilege</h3>
+      <p>Legacy Domain Admin is disabled but still marked as privileged.</p>
+      <p><strong>Affected object:</strong> legacy.admin@corp.local</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>user_id=ad-u-101</code></li><li><code>source=ad</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Remove privileged assignments from disabled accounts.</p>
+    </article>
+  
+    <article class="finding medium">
+      <span class="badge">medium</span>
+      <h3>ID-004 - Password never expires</h3>
+      <p>Build Service has password_never_expires enabled.</p>
+      <p><strong>Affected object:</strong> buildsvc@corp.local</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>source=ad</code></li><li><code>privileged=False</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Review password policy and migrate service use cases to managed identities.</p>
+    </article>
+  
+    <article class="finding medium">
+      <span class="badge">medium</span>
+      <h3>ID-008 - Stale application secret</h3>
+      <p>HR Automation App has a secret aged 240 days.</p>
+      <p><strong>Affected object:</strong> HR Automation App</p>
+      
+        <p><strong>Evidence:</strong></p>
+        <ul><li><code>secret_age_days=240</code></li></ul>
+      
+      <p><strong>Remediation:</strong> Rotate secrets and prefer certificate or workload identity federation where possible.</p>
+    </article>
+  
+</body>
+</html>
