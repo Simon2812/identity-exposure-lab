@@ -121,4 +121,12 @@ src/identity_exposure/reporting/    report writers
 artifacts/reports/                  generated JSON and HTML reports
 ```
 
-Keywords: identity security, active directory, entra id, graph analysis, fastapi, pytest
+## Future Improvements
+
+- Add support for Microsoft Graph API and LDAP-based ingestion.
+- Expand detection coverage with additional IAM attack techniques and MITRE ATT&CK mappings.
+- Improve privilege path analysis using Neo4j and advanced graph traversal.
+- Add multi-cloud IAM analysis for AWS and Google Cloud environments.
+- Implement authentication, RBAC, and continuous scheduled scanning.
+- Extend reporting with remediation guidance, dashboards, and SIEM integrations.
+- Add Docker support and CI/CD pipelines for automated deployment and testing.
